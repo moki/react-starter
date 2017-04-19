@@ -1,0 +1,12 @@
+{
+  "name": "react-starter",
+  "version": "1.0.0",
+  "description": "my personal starter for react projects",
+  "main": "index.js",
+  "repository": "git@github.com:xxmoki/react-starter.git",
+  "author": "Morozov Kirill <morozov.kirill.moki@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ."
+  }
+}
