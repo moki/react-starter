@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 // @flow
+/* eslint-disable no-console */
 import compression from 'compression';
 import express from 'express';
 
@@ -18,7 +18,13 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Project ready, visit: http://localhost:${PORT}/\nenvironment: ${isProduction ? 'production' : 'development'}`);
+  console.log(
+    `Server running on port ${PORT} ${
+      isProduction
+      ? '(production)'
+      : '(development).\nKeep "yarn wds:dev" running in an other terminal'
+    }.`,
+  );
 });
 
 console.log(PROJECT_NAME);

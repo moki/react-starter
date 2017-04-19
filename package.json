@@ -8,24 +8,30 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn run start:dev",
-    "start:dev": "nodemon --ignore lib --exec babel-node src/server",
-    "build:prod": "yarn run clean:prod && babel src -d lib --ignore .test.js",
-    "start:prod": "NODE_ENV=production pm2 start lib/server && pm2 logs",
+    "start:dev": "nodemon -e js,jsx --ignore lib --ignore dist --exec babel-node src/server",
+    "wds:dev": "webpack-dev-server --progress",
+    "build:prod": "yarn run clean:prod && babel src -d lib --ignore .test.js && cross-env NODE_ENV=production webpack -p --progress",
+    "start:prod": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "stop:prod": "pm2 delete server",
-    "clean:prod": "rimraf lib",
+    "clean:prod": "rimraf lib dist",
     "verify": "yarn run lint && yarn run test",
-    "lint": "eslint src && flow",
+    "lint": "eslint src webpack.config.babel.js --ext .js,.jsx && flow",
     "test": "jest --coverage",
     "precommit": "yarn run verify",
     "prepush": "yarn run verify && yarn run build:prod"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-jest": "^19.0.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-flow-react-proptypes": "^1.2.0",
     "babel-plugin-module-resolver": "^2.7.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-import-resolver-babel-module": "^3.0.0",
@@ -39,12 +45,15 @@
     "jest": "^19.0.2",
     "nodemon": "^1.11.0",
     "pm2": "^2.4.5",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "babel": {
     "presets": [
       "env",
-      "flow"
+      "flow",
+      "react"
     ],
     "plugins": [
       [
@@ -54,7 +63,8 @@
             "./src"
           ]
         }
-      ]
+      ],
+      "flow-react-proptypes"
     ]
   },
   "eslintConfig": {
@@ -74,7 +84,9 @@
       "compat"
     ],
     "rules": {
-      "compat/compat": 2
+      "compat/compat": 2,
+      "react/jsx-filename-extension": 0,
+      "import/first": 0
     },
     "settings": {
       "import/resolver": {
@@ -86,7 +98,12 @@
     "> 1%"
   ],
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "compression": "^1.6.2",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "next"
   }
 }
