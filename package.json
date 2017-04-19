@@ -7,21 +7,28 @@
   "author": "Morozov Kirill <morozov.kirill.moki@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node src",
-    "verify": "yarn lint && yarn test",
+    "start": "yarn run start:dev",
+    "start:dev": "nodemon --ignore lib --exec babel-node src/server",
+    "build:prod": "yarn run clean:prod && babel src -d lib --ignore .test.js",
+    "start:prod": "NODE_ENV=production pm2 start lib/server && pm2 logs",
+    "stop:prod": "pm2 delete server",
+    "clean:prod": "rimraf lib",
+    "verify": "yarn run lint && yarn run test",
     "lint": "eslint src && flow",
     "test": "jest --coverage",
-    "precommit": "yarn verify",
-    "prepush": "yarn verify"
+    "precommit": "yarn run verify",
+    "prepush": "yarn run verify && yarn run build:prod"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.2",
     "babel-jest": "^19.0.0",
+    "babel-plugin-module-resolver": "^2.7.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-flow": "^6.23.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
+    "eslint-import-resolver-babel-module": "^3.0.0",
     "eslint-plugin-compat": "^1.0.2",
     "eslint-plugin-flowtype": "^2.31.0",
     "eslint-plugin-import": "^2.2.0",
@@ -29,32 +36,57 @@
     "eslint-plugin-react": "^6.9.0",
     "flow-bin": "^0.44.2",
     "husky": "^0.13.3",
-    "jest": "^19.0.2"
+    "jest": "^19.0.2",
+    "nodemon": "^1.11.0",
+    "pm2": "^2.4.5",
+    "rimraf": "^2.6.1"
   },
   "babel": {
     "presets": [
       "env",
       "flow"
+    ],
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./src"
+          ]
+        }
+      ]
     ]
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "env": {
-      "jest": "true"
-    },
     "extends": [
       "airbnb",
       "plugin:flowtype/recommended"
     ],
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": "true",
+      "es6": true
+    },
     "plugins": [
       "flowtype",
       "compat"
     ],
     "rules": {
       "compat/compat": 2
+    },
+    "settings": {
+      "import/resolver": {
+        "babel-module": {}
+      }
     }
   },
   "browserslist": [
     "> 1%"
-  ]
+  ],
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.15.2"
+  }
 }
