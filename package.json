@@ -3,10 +3,58 @@
   "version": "1.0.0",
   "description": "my personal starter for react projects",
   "main": "index.js",
-  "repository": "git@github.com:xxmoki/react-starter.git",
+  "repository": "git@github.com:moki/react-starter.git",
   "author": "Morozov Kirill <morozov.kirill.moki@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node ."
-  }
+    "start": "babel-node src",
+    "verify": "yarn lint && yarn test",
+    "lint": "eslint src && flow",
+    "test": "jest --coverage",
+    "precommit": "yarn verify",
+    "prepush": "yarn verify"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.2",
+    "babel-jest": "^19.0.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-compat": "^1.0.2",
+    "eslint-plugin-flowtype": "^2.31.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2 || ^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "flow-bin": "^0.44.2",
+    "husky": "^0.13.3",
+    "jest": "^19.0.2"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "flow"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "jest": "true"
+    },
+    "extends": [
+      "airbnb",
+      "plugin:flowtype/recommended"
+    ],
+    "plugins": [
+      "flowtype",
+      "compat"
+    ],
+    "rules": {
+      "compat/compat": 2
+    }
+  },
+  "browserslist": [
+    "> 1%"
+  ]
 }
