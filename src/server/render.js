@@ -1,10 +1,12 @@
-// @flow
 /* eslint-disable import/prefer-default-export */
-import { APP_CONTAINER_CLASS, STATIC_PATH, WDS_PORT } from 'shared/config';
+// @flow
+import { APP_CONTAINER_CLASS, STATIC_PATH } from 'shared/config';
 import { isProduction } from 'shared/util';
 
-export const render = (title: string) => `
-  <!doctype html>
+const developmentURL = '/dist/bundle.js';
+const productionURL = `${STATIC_PATH}/bundle.js`;
+
+export const render = (title: string) => `<!doctype html>
   <html>
     <head>
       <title>${title}</title>
@@ -12,7 +14,7 @@ export const render = (title: string) => `
     <body>
       <h1>${title}</h1>
     <div class="${APP_CONTAINER_CLASS}"></div>
-    <script src="${isProduction ? STATIC_PATH : `http://localhost:${WDS_PORT}/dist`}/js/bundle.js"></script>
+    <script src="${isProduction ? productionURL : developmentURL}"></script>
     </body>
   </html>
 `;

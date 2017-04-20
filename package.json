@@ -8,15 +8,16 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn run start:dev",
-    "start:dev": "nodemon -e js,jsx --ignore lib --ignore dist --exec babel-node src/server",
-    "wds:dev": "webpack-dev-server --progress",
-    "build:prod": "yarn run clean:prod && babel src -d lib --ignore .test.js && cross-env NODE_ENV=production webpack -p --progress",
-    "start:prod": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
-    "stop:prod": "pm2 delete server",
+    "start:dev": "nodemon --ignore lib --ignore dist --ignore src/client --ignore internals --exec babel-node src/server",
+    "build": "yarn run clean:prod && yarn run transpile:prod && yarn run build:prod",
+    "build:prod": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js -p --progress",
+    "transpile:prod": "babel src -d lib --ignore .test.js",
+    "start:prod": "cross-env NODE_ENV=production node lib/server",
     "clean:prod": "rimraf lib dist",
+    "clean:test": "rimraf coverage",
     "verify": "yarn run lint && yarn run test",
-    "lint": "eslint src webpack.config.babel.js --ext .js,.jsx && flow",
-    "test": "jest --coverage",
+    "lint": "eslint src --ext .js,.jsx && flow",
+    "test": "yarn run clean:test && jest --coverage",
     "precommit": "yarn run verify",
     "prepush": "yarn run verify && yarn run build:prod"
   },
@@ -47,7 +48,17 @@
     "pm2": "^2.4.5",
     "rimraf": "^2.6.1",
     "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-hot-middleware": "^2.18.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "compression": "^1.6.2",
+    "express": "^4.15.2",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "next"
   },
   "babel": {
     "presets": [
@@ -96,14 +107,5 @@
   },
   "browserslist": [
     "> 1%"
-  ],
-  "dependencies": {
-    "babel-polyfill": "^6.23.0",
-    "compression": "^1.6.2",
-    "express": "^4.15.2",
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-hot-loader": "next"
-  }
+  ]
 }

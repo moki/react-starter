@@ -5,8 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import { APP_CONTAINER_SELECTOR } from 'shared/config';
 import App from './app';
+
+import { APP_CONTAINER_SELECTOR } from 'shared/config';
 
 const rootElement = document.querySelector(APP_CONTAINER_SELECTOR);
 

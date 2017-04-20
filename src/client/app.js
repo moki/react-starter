@@ -1,10 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
+// @flow
 import React from 'react';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div>Hello from React App Component</div>
-    );
-  }
-}
+const App = () => <div>React Application</div>;
+
+export default App;

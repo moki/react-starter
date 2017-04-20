@@ -1,5 +1,5 @@
+/* eslint-disable no-console, global-require, import/no-extraneous-dependencies */
 // @flow
-/* eslint-disable no-console */
 import compression from 'compression';
 import express from 'express';
 
@@ -11,7 +11,17 @@ const app = express();
 
 app.use(compression());
 app.use(STATIC_PATH, express.static('dist'));
-app.use(STATIC_PATH, express.static('public'));
+
+if (!isProduction) {
+  const webpack = require('webpack');
+  const webpackConfig = require('../../internals/webpack/webpack.dev.babel.js').default;
+  const compiler = webpack(webpackConfig);
+  app.use(require('webpack-dev-middleware')(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
 
 app.get('/', (req, res) => {
   res.send(render(PROJECT_NAME));
@@ -22,9 +32,7 @@ app.listen(PORT, () => {
     `Server running on port ${PORT} ${
       isProduction
       ? '(production)'
-      : '(development).\nKeep "yarn wds:dev" running in an other terminal'
+      : '(development)'
     }.`,
   );
 });
-
-console.log(PROJECT_NAME);
