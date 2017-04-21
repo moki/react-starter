@@ -55,10 +55,14 @@
     "babel-polyfill": "^6.23.0",
     "compression": "^1.6.2",
     "express": "^4.15.2",
+    "immutable": "4.0.0-rc.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-hot-loader": "next"
+    "react-hot-loader": "next",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0",
+    "redux-actions": "^2.0.2"
   },
   "babel": {
     "presets": [
@@ -72,7 +76,11 @@
         {
           "root": [
             "./src"
-          ]
+          ],
+          "alias": {
+            "components": "./src/client/components",
+            "containers": "./src/client/containers"
+          }
         }
       ],
       "flow-react-proptypes"
