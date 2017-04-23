@@ -16,7 +16,16 @@ const config = {
   },
   module: {
     rules: [
-      { test: /\.(js)$/, use: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.(js)$/,
+        use: {
+          loader: 'babel-loader?cacheDirectory',
+          options: {
+            presets: ['env'],
+          },
+        },
+        exclude: /node_modules/,
+      },
     ],
   },
   plugins: [

@@ -7,6 +7,8 @@ import { PROJECT_NAME, STATIC_PATH, PORT } from 'shared/config';
 import { isProduction } from 'shared/util';
 import { render } from 'server/render';
 
+import { helloRoute } from 'shared/routes';
+
 const app = express();
 
 app.use(compression());
@@ -26,6 +28,10 @@ if (!isProduction) {
 app.get('/', (req, res) => {
   res.send(render(PROJECT_NAME));
 });
+
+app.get(helloRoute(), (req, res) =>
+  res.json({ message: `Hello from the server! (received ${req.params.num})` }),
+);
 
 app.listen(PORT, () => {
   console.log(
