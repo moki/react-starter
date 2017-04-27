@@ -62,8 +62,11 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-helmet": "^5.0.3",
     "react-hot-loader": "next",
     "react-redux": "^5.0.4",
+    "react-router": "next",
+    "react-router-dom": "next",
     "redux": "^3.6.0",
     "redux-actions": "^2.0.2",
     "redux-thunk": "^2.2.0"
@@ -82,8 +85,9 @@
             "./src"
           ],
           "alias": {
-            "components": "./src/client/components",
-            "containers": "./src/client/containers"
+            "components": "./src/shared/components",
+            "containers": "./src/shared/containers",
+            "pages": "./src/shared/pages"
           }
         }
       ],

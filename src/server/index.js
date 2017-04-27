@@ -3,11 +3,10 @@
 import compression from 'compression';
 import express from 'express';
 
-import { PROJECT_NAME, STATIC_PATH, PORT } from 'shared/config';
+import { STATIC_PATH, PORT } from 'shared/config';
 import { isProduction } from 'shared/util';
-import { render } from 'server/render';
 
-import { helloRoute } from 'shared/routes';
+import routing from './routing';
 
 const app = express();
 
@@ -25,13 +24,7 @@ if (!isProduction) {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
-app.get('/', (req, res) => {
-  res.send(render(PROJECT_NAME));
-});
-
-app.get(helloRoute(), (req, res) =>
-  res.json({ message: `Hello from the server! (received ${req.params.num})` }),
-);
+routing(app);
 
 app.listen(PORT, () => {
   console.log(
