@@ -1,5 +1,5 @@
-/* eslint-disable react/prefer-stateless-function */
 // @flow
+/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import { Switch } from 'react-router';
 import { Route } from 'react-router-dom';

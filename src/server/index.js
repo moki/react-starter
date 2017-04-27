@@ -1,5 +1,5 @@
-/* eslint-disable no-console, global-require, import/no-extraneous-dependencies */
 // @flow
+/* eslint-disable no-console, global-require, import/no-extraneous-dependencies */
 import compression from 'compression';
 import express from 'express';
 

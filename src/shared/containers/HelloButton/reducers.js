@@ -1,5 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 // @flow
+/* eslint-disable import/prefer-default-export */
 import Immutable from 'immutable';
 import type { fromJS as Immut } from 'immutable';
 

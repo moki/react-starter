@@ -14,7 +14,7 @@ const intitialState = Immutable.fromJS({
 
 const helloAsyncReducer = (
   state: Immut = intitialState,
-  action: { type: string, payload: any },
+  action: Object,
 ) => {
   switch (action.type) {
     case SAY_HELLO_REQUEST:

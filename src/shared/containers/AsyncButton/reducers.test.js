@@ -1,8 +1,3 @@
-// import {
-//   SAY_HELLO_REQUEST,
-//   SAY_HELLO_SUCCESS,
-//   SAY_HELLO_FAILURE,
-// } from './constants';
 import {
   sayHelloRequest,
   sayHelloSuccess,

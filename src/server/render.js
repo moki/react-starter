@@ -1,5 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 // @flow
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
