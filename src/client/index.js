@@ -10,11 +10,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import thunkMiddleware from 'redux-thunk';
 
+import Socket from './socket';
 import App from 'shared/app';
 import helloReducer from 'containers/HelloButton/reducers';
 import helloAsyncReducer from 'containers/AsyncButton/reducers';
 
-import { APP_CONTAINER_SELECTOR } from 'shared/config';
+import { APP_CONTAINER_SELECTOR, JSS_SSR_SELECTOR } from 'shared/config';
 import { isProduction } from 'shared/util';
 
 const rootElement = document.querySelector(APP_CONTAINER_SELECTOR);
@@ -59,3 +60,9 @@ if (module.hot) {
     ReactDOM.render(Wrap(Next, store), rootElement);
   });
 }
+
+const jssServerSide = document.querySelector(JSS_SSR_SELECTOR);
+// flow-disable-next-line
+jssServerSide.parentNode.removeChild(jssServerSide);
+
+Socket(store);
